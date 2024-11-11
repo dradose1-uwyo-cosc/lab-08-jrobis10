@@ -14,8 +14,8 @@
 # Other wise return the converted int or float 
 # Floats should only have one decimal point in them 
 
-num = input('enter integer or a float')
-def convertToNumber(num):
+num = input('enter integer or a float: ')
+def convert(num):
     isNeg = False
     if num[0] == "-":
         isNeg = True
@@ -36,7 +36,7 @@ def convertToNumber(num):
         return False
 
 
-print(convertToNumber(num))
+print(convert(num))
 
 
 
@@ -65,34 +65,46 @@ print("*" * 75)
 
 def slope_intercept(m,b,xl,xu):
      y_values = []
-for x in range(xl,xu+1):
+     for x in range(xl,xu+1):
         y = m*x + b
         y_values.append(y)
-        return y_values
+     return y_values
 
 
 
 
 
 while True: 
-    m = input('enter slope "m"')
+    values = input('enter slope, intercept, lower and upper bound in the format: m,b,xl,xu, enter exit to leave program: ')
+    if values.lower() == 'exit' :
+        print('leaving program')
+        break
+    values = values.replace(' ','').split(',')
+ 
+    m = convert(values[0])
     
-    m = convert(m)
+    b = convert(values[1])
     
+    xl = convert(values[2])
     
-    b = input('enter intercept "b": ')
-    
-    b = convert(b)
-    
-    
-    xl = input('enter lower bound "xl": ')
-    
-    xl = convert(xl)
-    
-    
-    xu = input('enter upper bound "xu": ')
-    
-    xu = convert(xu)
+    xu = convert(values[3])
+
+    if xu < xl:
+        print('lower bound is greater than upper, please try again')
+        
+        continue
+
+    elif '.' in values[2] or '.' in values[3]:
+
+        print('bounds must be integers, try again')
+
+        continue 
+
+    else: 
+
+        print(slope_intercept(m,b,xl,xu))
+
+
 
 
    
@@ -111,3 +123,54 @@ print("*" * 75)
 # Create a loop like above to prompt the user for input for the three values
 # Create a second function that just does the square root operation 
     # If the number you are trying to take the square root of is negative, return null
+
+
+def squ(number):
+
+    square_root = number**(1/2)
+
+    return square_root
+
+
+def roots(a,b,c):
+
+    discrim = (b**2)
+
+    if discrim < 0:
+
+        return None
+
+    elif discrim > 0: 
+
+        x1 = (-1*b + squ(discrim))/(2*a)
+
+        x2 = (-1*b - squ(discrim))/(2*a)
+
+        return f'{x1: .2f}' , f'{x2: .2f}'
+
+    elif discrim == 0:
+        
+        x = (-b/(2*a))
+
+        return f'{x: .2f}'
+
+
+while True:
+
+    vals = input('enter 3 values in the format a,b,c to return the roots of: ')
+
+    if vals.lower() == 'exit' :
+
+        print('leave program')
+
+        break
+
+    vals = vals.replace(' ','').split(',')
+
+    a = convert(vals[0])
+
+    b = convert(vals[1])
+
+    c = convert(vals[2])
+
+    print(roots(a,b,c))
